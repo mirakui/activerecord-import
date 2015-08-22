@@ -286,6 +286,7 @@ class ActiveRecord::Base
 
       # dup the passed in array so we don't modify it unintentionally
       array_of_attributes = array_of_attributes.dup
+      column_names = column_names.dup
 
       # Force the primary key col into the insert if it's not
       # on the list and we are using a sequence and stuff a nil
@@ -511,6 +512,7 @@ class ActiveRecord::Base
 
           if supports_on_duplicate_key_update? and options[:on_duplicate_key_update] != false
             if options[:on_duplicate_key_update]
+              options[:on_duplicate_key_update] = options[:on_duplicate_key_update].dup
               options[:on_duplicate_key_update] << key.to_sym if options[:on_duplicate_key_update].is_a?(Array) && !options[:on_duplicate_key_update].include?(key.to_sym)
               options[:on_duplicate_key_update][key.to_sym] = key.to_sym if options[:on_duplicate_key_update].is_a?(Hash)
             else
